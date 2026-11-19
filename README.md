@@ -227,6 +227,5 @@ php artisan config:cache && php artisan route:cache && php artisan view:cache &&
 | Peringatan `Unable to load dynamic library ...` | Tidak berbahaya. Beberapa ekstensi di `php.ini` sudah bawaan PHP; beri tanda `;` pada baris `extension=` yang bersangkutan. |
 | Gambar logo tidak tampil | Jalankan `php artisan storage:link`. |
 
-## Lisensi
 
 Hak cipta BroSeven! Developer.
