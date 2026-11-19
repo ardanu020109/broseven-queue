@@ -2,10 +2,10 @@
 Broseven Queue
 Modern Queue Management System
 Aplikasi manajemen antrean berbasis web untuk membantu pengelolaan layanan, penerbitan nomor antrean, pemanggilan pelanggan, dan pemantauan antrean secara real-time.
-![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.3%2B-777BB4?logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![Laravel](https://laravel.com)
+![PHP](https://www.php.net)
+![MySQL](https://www.mysql.com)
+![License](LICENSE)
 Repository: github.com/ardanu020109/broseven-queue
 </div>
 ---
@@ -57,20 +57,15 @@ Laravel Echo	Menerima event broadcasting di browser
 Pusher JS	Transport WebSocket untuk Echo
 Bootstrap Icons	Ikon antarmuka (bila digunakan pada halaman)
 Browser Print API	Mencetak tiket antrean
-Tampilan aplikasi
-Tambahkan screenshot aktual aplikasi pada folder `docs/images/`, lalu ubah path gambar di bawah sesuai nama file screenshot.
-Beranda	Dashboard Admin
-![Beranda](docs/images/home.png)	![Dashboard](docs/images/dashboard.png)
 
 Pengambilan Antrean	Display Antrean
-![Ambil Antrean](docs/images/take-queue.png)	![Display Antrean](docs/images/display.png)
 Persyaratan sistem
 Pastikan perangkat pengembangan sudah memiliki:
 PHP 8.3+.
 Composer.
 Node.js dan NPM.
 MySQL.
-Ekstensi PHP yang dibutuhkan Laravel dan driver MySQL (`pdo_mysql`).
+Ekstensi PHP yang dibutuhkan Laravel dan driver MySQL (`pdo\\\_mysql`).
 Git.
 Instalasi
 1. Clone repository
@@ -99,28 +94,28 @@ php artisan key:generate
 4. Buat database MySQL
 Jalankan perintah berikut melalui MySQL:
 ```sql
-CREATE DATABASE broseven_queue
+CREATE DATABASE broseven\\\_queue
 CHARACTER SET utf8mb4
-COLLATE utf8mb4_unicode_ci;
+COLLATE utf8mb4\\\_unicode\\\_ci;
 ```
 5. Atur koneksi database
 Sesuaikan konfigurasi berikut di file `.env`:
 ```env
-APP_NAME="Broseven Queue"
-APP_ENV=local
-APP_DEBUG=true
-APP_URL=http://127.0.0.1:8000
-APP_TIMEZONE=Asia/Makassar
-APP_LOCALE=id
+APP\\\_NAME="Broseven Queue"
+APP\\\_ENV=local
+APP\\\_DEBUG=true
+APP\\\_URL=http://127.0.0.1:8000
+APP\\\_TIMEZONE=Asia/Makassar
+APP\\\_LOCALE=id
 
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=broseven_queue
-DB_USERNAME=root
-DB_PASSWORD=
+DB\\\_CONNECTION=mysql
+DB\\\_HOST=127.0.0.1
+DB\\\_PORT=3306
+DB\\\_DATABASE=broseven\\\_queue
+DB\\\_USERNAME=root
+DB\\\_PASSWORD=
 ```
-Sesuaikan `DB_USERNAME` dan `DB_PASSWORD` dengan konfigurasi MySQL lokal.
+Sesuaikan `DB\\\_USERNAME` dan `DB\\\_PASSWORD` dengan konfigurasi MySQL lokal.
 6. Jalankan migration dan seeder
 ```bash
 php artisan migrate
@@ -157,19 +152,19 @@ http://127.0.0.1:8000
 Menjalankan fitur real-time (Laravel Reverb)
 Pastikan konfigurasi broadcasting pada `.env` menggunakan Reverb. Contoh konfigurasi lokal:
 ```env
-BROADCAST_CONNECTION=reverb
+BROADCAST\\\_CONNECTION=reverb
 
-REVERB_APP_ID=your-app-id
-REVERB_APP_KEY=your-app-key
-REVERB_APP_SECRET=your-app-secret
-REVERB_HOST=127.0.0.1
-REVERB_PORT=8080
-REVERB_SCHEME=http
+REVERB\\\_APP\\\_ID=your-app-id
+REVERB\\\_APP\\\_KEY=your-app-key
+REVERB\\\_APP\\\_SECRET=your-app-secret
+REVERB\\\_HOST=127.0.0.1
+REVERB\\\_PORT=8080
+REVERB\\\_SCHEME=http
 
-VITE_REVERB_APP_KEY="${REVERB_APP_KEY}"
-VITE_REVERB_HOST="${REVERB_HOST}"
-VITE_REVERB_PORT="${REVERB_PORT}"
-VITE_REVERB_SCHEME="${REVERB_SCHEME}"
+VITE\\\_REVERB\\\_APP\\\_KEY="${REVERB\\\_APP\\\_KEY}"
+VITE\\\_REVERB\\\_HOST="${REVERB\\\_HOST}"
+VITE\\\_REVERB\\\_PORT="${REVERB\\\_PORT}"
+VITE\\\_REVERB\\\_SCHEME="${REVERB\\\_SCHEME}"
 ```
 Gunakan nilai kredensial Reverb milik environment sendiri. Jangan menggunakan atau mengunggah secret dari environment orang lain.
 Jalankan server Reverb pada terminal terpisah:
@@ -252,9 +247,9 @@ php artisan route:list
 ```
 Keamanan
 Jangan mengunggah file `.env` ke repository.
-Jangan membagikan `APP_KEY`, password database, atau secret Reverb.
+Jangan membagikan `APP\\\_KEY`, password database, atau secret Reverb.
 Gunakan password admin yang kuat.
-Nonaktifkan debug pada environment production (`APP_DEBUG=false`).
+Nonaktifkan debug pada environment production (`APP\\\_DEBUG=false`).
 Gunakan HTTPS pada deployment.
 Lakukan backup database secara berkala.
 Jangan menjalankan `migrate:fresh` pada database production.
