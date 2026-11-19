@@ -1,0 +1,59 @@
+@media print {
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    /* Sembunyikan seluruh tampilan website, hanya tiket yang dicetak. */
+    .no-print,
+    .public-header,
+    .public-footer,
+    .alert {
+        display: none !important;
+    }
+
+    .public-main {
+        min-height: 0;
+        padding: 0;
+    }
+
+    .container,
+    .ticket-page {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .ticket-stage {
+        display: block;
+        padding: 0;
+        background: none;
+        border-radius: 0;
+    }
+
+    .ticket {
+        margin: 0 auto;
+        padding: 3mm 2mm;
+        border-radius: 0;
+        box-shadow: none;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .ticket--80mm {
+        width: 76mm;
+    }
+
+    .ticket--58mm {
+        width: 54mm;
+    }
+
+    .ticket--a4 {
+        width: 150mm;
+        margin-top: 10mm;
+    }
+}

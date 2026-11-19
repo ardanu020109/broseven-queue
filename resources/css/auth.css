@@ -1,0 +1,141 @@
+.auth-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+}
+
+.auth-brand {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem;
+    background: var(--dark-color);
+    color: var(--white-color);
+    overflow: hidden;
+}
+
+.auth-brand::before,
+.auth-brand::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.auth-brand::before {
+    width: 420px;
+    height: 420px;
+    right: -140px;
+    bottom: -140px;
+    background: color-mix(in srgb, var(--accent-color) 35%, transparent);
+}
+
+.auth-brand::after {
+    width: 240px;
+    height: 240px;
+    right: 90px;
+    bottom: 120px;
+    background: color-mix(in srgb, var(--primary-color) 28%, transparent);
+}
+
+.auth-brand > * {
+    position: relative;
+    z-index: 1;
+}
+
+.auth-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.auth-logo img {
+    max-height: 44px;
+    width: auto;
+}
+
+.auth-logo-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.auth-headline {
+    max-width: 420px;
+}
+
+.auth-headline h2 {
+    font-size: 2.1rem;
+    margin-bottom: 0.8rem;
+}
+
+.auth-headline p {
+    margin: 0;
+    opacity: 0.85;
+}
+
+.auth-brand small {
+    opacity: 0.7;
+}
+
+.auth-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.25rem;
+    background: var(--background-color);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 2.2rem 2rem;
+    background: var(--white-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.auth-card h1 {
+    margin-bottom: 0.3rem;
+    font-size: 1.6rem;
+}
+
+.auth-card .lead {
+    margin-bottom: 1.6rem;
+    color: var(--dark-color);
+}
+
+.auth-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.3rem;
+}
+
+@media (max-width: 860px) {
+    .auth-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-brand {
+        padding: 1.5rem;
+    }
+
+    .auth-headline {
+        display: none;
+    }
+
+    .auth-brand small {
+        display: none;
+    }
+}
