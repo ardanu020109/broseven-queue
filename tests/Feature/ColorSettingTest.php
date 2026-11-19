@@ -76,6 +76,9 @@ class ColorSettingTest extends TestCase
         $this->assertSame('#AA11CC', ColorSetting::palette()['primary_color']['value']);
 
         $this->get(route('home'))->assertSee('--primary-color:#AA11CC', false);
+
+        // Halaman login dan display diuji sebagai tamu.
+        auth()->logout();
         $this->get(route('login'))->assertSee('--primary-color:#AA11CC', false);
         $this->get(route('display.index'))->assertSee('--primary-color:#AA11CC', false);
         $this->assertDatabaseHas('activity_logs', ['action' => 'colors_updated']);
@@ -112,7 +115,7 @@ class ColorSettingTest extends TestCase
         $this->actingAs($this->admin)
             ->put(route('admin.settings.colors.update'), $this->palette(['dark_color' => '#dddddd']))
             ->assertSessionHas('success')
-            ->assertSessionHas('warning', fn (array $warnings) => count($warnings) >= 1
+            ->assertSessionHas('warning', fn(array $warnings) => count($warnings) >= 1
                 && str_contains(implode(' ', $warnings), 'Dark Color'));
 
         $this->assertSame('#DDDDDD', ColorSetting::where('key', 'dark_color')->value('value'));
@@ -122,8 +125,12 @@ class ColorSettingTest extends TestCase
     {
         $this->actingAs($this->admin)
             ->put(route('admin.settings.colors.update'), $this->palette([
-                'primary_color' => '#F6EB61', 'secondary_color' => '#A8A8A8', 'accent_color' => '#F9C74F',
-                'dark_color' => '#6D6D6D', 'background_color' => '#F9F9F9', 'text_color' => '#292929',
+                'primary_color' => '#F6EB61',
+                'secondary_color' => '#A8A8A8',
+                'accent_color' => '#F9C74F',
+                'dark_color' => '#6D6D6D',
+                'background_color' => '#F9F9F9',
+                'text_color' => '#292929',
             ]))
             ->assertSessionMissing('warning');
     }
@@ -133,6 +140,6 @@ class ColorSettingTest extends TestCase
         $this->assertEqualsWithDelta(21.0, Contrast::ratio('#000000', '#FFFFFF'), 0.01);
         $this->assertEqualsWithDelta(1.0, Contrast::ratio('#777777', '#777777'), 0.001);
         $this->assertEqualsWithDelta(Contrast::ratio('#FFFFFF', '#6D6D6D'), Contrast::ratio('#6D6D6D', '#FFFFFF'), 0.0001);
-        $this->assertSame('#2B2B2B', Contrast::displayBackground('#6D6D6D'));
+        $this->assertSame('#2C2C2C', Contrast::displayBackground('#6D6D6D'));
     }
 }

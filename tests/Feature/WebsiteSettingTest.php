@@ -151,7 +151,10 @@ class WebsiteSettingTest extends TestCase
             'display_call_template' => 'Number {number}, please go to {counter}.',
         ])->assertSessionHas('success');
 
-        $this->get(route('display.index'))->assertViewHas('config', fn (array $c) => $c['title'] === 'Layar Pelayanan'
+        $response = $this->get(route('display.index'));
+
+        $response->assertOk();
+        $response->assertViewHas('config', fn(array $c) => $c['title'] === 'Layar Pelayanan'
             && $c['number_size'] === 'xl'
             && $c['sound_enabled'] === false
             && $c['list_limit'] === 8
@@ -162,8 +165,13 @@ class WebsiteSettingTest extends TestCase
     public function test_display_validation(): void
     {
         $valid = [
-            'display_title' => 'X', 'display_marquee_speed' => 40, 'display_number_size' => 'lg', 'display_list_limit' => 5,
-            'display_voice_volume' => 1, 'display_voice_rate' => 0.9, 'display_voice_lang' => 'id-ID',
+            'display_title' => 'X',
+            'display_marquee_speed' => 40,
+            'display_number_size' => 'lg',
+            'display_list_limit' => 5,
+            'display_voice_volume' => 1,
+            'display_voice_rate' => 0.9,
+            'display_voice_lang' => 'id-ID',
             'display_call_template' => 'Nomor {number}',
         ];
 
@@ -198,7 +206,7 @@ class WebsiteSettingTest extends TestCase
 
         $this->get(URL::signedRoute('queue.ticket', ['queue' => $queue->id]))
             ->assertOk()
-            ->assertViewHas('ticket', fn (array $t) => $t['paper'] === 'a4'
+            ->assertViewHas('ticket', fn(array $t) => $t['paper'] === 'a4'
                 && $t['title'] === 'KARTU ANTREAN'
                 && $t['show_logo'] === false
                 && $t['show_waiting'] === false);
