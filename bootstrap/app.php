@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\EnsureAdminIsActive;
 use Illuminate\Http\Request;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use App\Http\Middleware\SecurityHeaders;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,6 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => EnsureAdminIsActive::class,
         ]);
+
+        $middleware->appendToGroup('web', SecurityHeaders::class);
 
         $middleware->redirectGuestsTo(fn(Request $request) => route('login'));
         $middleware->redirectUsersTo(fn(Request $request) => route('admin.dashboard'));
