@@ -2,10 +2,6 @@
 Broseven Queue
 Modern Queue Management System
 Aplikasi manajemen antrean berbasis web untuk membantu pengelolaan layanan, penerbitan nomor antrean, pemanggilan pelanggan, dan pemantauan antrean secara real-time.
-![Laravel](https://laravel.com)
-![PHP](https://www.php.net)
-![MySQL](https://www.mysql.com)
-![License](LICENSE)
 Repository: github.com/ardanu020109/broseven-queue
 </div>
 ---
@@ -65,7 +61,7 @@ PHP 8.3+.
 Composer.
 Node.js dan NPM.
 MySQL.
-Ekstensi PHP yang dibutuhkan Laravel dan driver MySQL (`pdo\\\_mysql`).
+Ekstensi PHP yang dibutuhkan Laravel dan driver MySQL (`pdo_mysql`).
 Git.
 Instalasi
 1. Clone repository
@@ -94,28 +90,28 @@ php artisan key:generate
 4. Buat database MySQL
 Jalankan perintah berikut melalui MySQL:
 ```sql
-CREATE DATABASE broseven\\\_queue
+CREATE DATABASE broseven_queue
 CHARACTER SET utf8mb4
-COLLATE utf8mb4\\\_unicode\\\_ci;
+COLLATE utf8mb4_unicode_ci;
 ```
 5. Atur koneksi database
 Sesuaikan konfigurasi berikut di file `.env`:
 ```env
-APP\\\_NAME="Broseven Queue"
-APP\\\_ENV=local
-APP\\\_DEBUG=true
-APP\\\_URL=http://127.0.0.1:8000
-APP\\\_TIMEZONE=Asia/Makassar
-APP\\\_LOCALE=id
+APP_NAME="Broseven Queue"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+APP_TIMEZONE=Asia/Makassar
+APP_LOCALE=id
 
-DB\\\_CONNECTION=mysql
-DB\\\_HOST=127.0.0.1
-DB\\\_PORT=3306
-DB\\\_DATABASE=broseven\\\_queue
-DB\\\_USERNAME=root
-DB\\\_PASSWORD=
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=broseven_queue
+DB_USERNAME=root
+DB_PASSWORD=
 ```
-Sesuaikan `DB\\\_USERNAME` dan `DB\\\_PASSWORD` dengan konfigurasi MySQL lokal.
+Sesuaikan `DB_USERNAME` dan `DB_PASSWORD` dengan konfigurasi MySQL lokal.
 6. Jalankan migration dan seeder
 ```bash
 php artisan migrate
@@ -152,19 +148,19 @@ http://127.0.0.1:8000
 Menjalankan fitur real-time (Laravel Reverb)
 Pastikan konfigurasi broadcasting pada `.env` menggunakan Reverb. Contoh konfigurasi lokal:
 ```env
-BROADCAST\\\_CONNECTION=reverb
+BROADCAST_CONNECTION=reverb
 
-REVERB\\\_APP\\\_ID=your-app-id
-REVERB\\\_APP\\\_KEY=your-app-key
-REVERB\\\_APP\\\_SECRET=your-app-secret
-REVERB\\\_HOST=127.0.0.1
-REVERB\\\_PORT=8080
-REVERB\\\_SCHEME=http
+REVERB_APP_ID=your-app-id
+REVERB_APP_KEY=your-app-key
+REVERB_APP_SECRET=your-app-secret
+REVERB_HOST=127.0.0.1
+REVERB_PORT=8080
+REVERB_SCHEME=http
 
-VITE\\\_REVERB\\\_APP\\\_KEY="${REVERB\\\_APP\\\_KEY}"
-VITE\\\_REVERB\\\_HOST="${REVERB\\\_HOST}"
-VITE\\\_REVERB\\\_PORT="${REVERB\\\_PORT}"
-VITE\\\_REVERB\\\_SCHEME="${REVERB\\\_SCHEME}"
+VITE_REVERB_APP_KEY="${REVERB_APP_KEY}"
+VITE_REVERB_HOST="${REVERB_HOST}"
+VITE_REVERB_PORT="${REVERB_PORT}"
+VITE_REVERB_SCHEME="${REVERB_SCHEME}"
 ```
 Gunakan nilai kredensial Reverb milik environment sendiri. Jangan menggunakan atau mengunggah secret dari environment orang lain.
 Jalankan server Reverb pada terminal terpisah:
@@ -247,9 +243,9 @@ php artisan route:list
 ```
 Keamanan
 Jangan mengunggah file `.env` ke repository.
-Jangan membagikan `APP\\\_KEY`, password database, atau secret Reverb.
+Jangan membagikan `APP_KEY`, password database, atau secret Reverb.
 Gunakan password admin yang kuat.
-Nonaktifkan debug pada environment production (`APP\\\_DEBUG=false`).
+Nonaktifkan debug pada environment production (`APP_DEBUG=false`).
 Gunakan HTTPS pada deployment.
 Lakukan backup database secara berkala.
 Jangan menjalankan `migrate:fresh` pada database production.
@@ -259,17 +255,6 @@ Jalankan test aplikasi dengan:
 ```bash
 php artisan test
 ```
-Sebelum deployment, lakukan pengujian alur pengambilan antrean, pemanggilan antrean, pemanggilan ulang, skip, restore, penyelesaian antrean, pencetakan tiket, serta pembaruan display real-time.
-Kontribusi
-Kontribusi, saran, dan pelaporan bug sangat terbuka. Silakan buat Issue untuk melaporkan masalah atau Pull Request untuk mengusulkan perubahan.
-Fork repository.
-Buat branch fitur: `git checkout -b feature/nama-fitur`.
-Commit perubahan: `git commit -m "Add: nama fitur"`.
-Push branch: `git push origin feature/nama-fitur`.
-Buat Pull Request.
-Lisensi
-Lisensi project perlu mengikuti file `LICENSE` yang disertakan pada repository. Jika belum tersedia, tentukan lisensi project sebelum mendistribusikan aplikasi.
----
 <div align="center">
 Broseven Queue  
 Manage queues. Improve service.
