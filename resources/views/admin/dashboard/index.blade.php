@@ -187,6 +187,4 @@
     <x-queue-detail-dialog />
 
     <script type="application/json" id="dashboard-chart-data">@json($charts, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)</script>
-    <script type="application/json" id="display-config">@json($config, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)</script>
-    <script type="application/json" id="display-initial">@json($snapshot, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)</script>
 @endsection

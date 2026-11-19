@@ -61,12 +61,31 @@ class SecurityTest extends TestCase
         $this->assertNull($response->headers->get('Strict-Transport-Security'));
     }
 
+
     public function test_hsts_is_sent_only_over_https(): void
     {
-        $this->withServerVariables(['HTTPS' => 'on'])
-            ->get(route('home'))
-            ->assertHeader('Strict-Transport-Security');
+        // Request HTTPS harus mendapatkan header HSTS.
+        $this->withServerVariables([
+            'HTTPS' => 'on',
+            'SERVER_PORT' => 443,
+        ])
+            ->get('https://localhost' . parse_url(route('home'), PHP_URL_PATH))
+            ->assertOk()
+            ->assertHeader(
+                'Strict-Transport-Security',
+                'max-age=31536000; includeSubDomains'
+            );
+
+        // Request HTTP tidak boleh mendapatkan header HSTS.
+        $this->withServerVariables([
+            'HTTPS' => 'off',
+            'SERVER_PORT' => 80,
+        ])
+            ->get('http://localhost' . parse_url(route('home'), PHP_URL_PATH))
+            ->assertOk()
+            ->assertHeaderMissing('Strict-Transport-Security');
     }
+
 
     public function test_admin_pages_are_not_cacheable(): void
     {
@@ -206,7 +225,10 @@ class SecurityTest extends TestCase
         ])->assertSessionHasErrors('site_logo');
 
         $this->actingAs($this->admin)->put(route('admin.profile.update'), [
-            'name' => 'X', 'username' => 'adminuji', 'email' => 'admin@example.test', 'photo' => $evil,
+            'name' => 'X',
+            'username' => 'adminuji',
+            'email' => 'admin@example.test',
+            'photo' => $evil,
         ])->assertSessionHasErrors('photo');
 
         $this->assertSame([], Storage::disk('public')->allFiles());
@@ -217,21 +239,36 @@ class SecurityTest extends TestCase
         Storage::fake('public');
 
         $this->actingAs($this->admin)->put(route('admin.profile.update'), [
-            'name' => 'Admin Uji', 'username' => 'adminuji', 'email' => 'admin@example.test', 'photo' => $this->image('foto.png'),
+            'name' => 'Admin Uji',
+            'username' => 'adminuji',
+            'email' => 'admin@example.test',
+            'photo' => $this->image('foto.png'),
         ])->assertSessionHasNoErrors();
         $this->assertStringStartsWith('profile-photos/', $this->admin->fresh()->profile_photo);
 
         $this->actingAs($this->admin)->post(route('admin.users.store'), [
-            'name' => 'Budi', 'username' => 'budi', 'email' => 'budi@example.test',
-            'password' => 'Rahasia123', 'password_confirmation' => 'Rahasia123', 'is_active' => '1',
+            'name' => 'Budi',
+            'username' => 'budi',
+            'email' => 'budi@example.test',
+            'password' => 'Rahasia123',
+            'password_confirmation' => 'Rahasia123',
+            'is_active' => '1',
             'photo' => $this->image('budi.png'),
         ])->assertSessionHasNoErrors();
         $this->assertStringStartsWith('profile-photos/', User::where('username', 'budi')->value('profile_photo'));
 
         $this->actingAs($this->admin)->post(route('admin.queue-items.store'), [
-            'name' => 'Cireng Viral', 'prefix' => 'CV', 'icon' => 'bi-cup-hot', 'color' => '#F9C74F',
-            'number_format' => '{PREFIX}{NUMBER}', 'number_padding' => 5, 'reset_period' => 'daily',
-            'hours_enabled' => '0', 'hours_open' => '08:00', 'hours_close' => '17:00', 'is_active' => '1',
+            'name' => 'Cireng Viral',
+            'prefix' => 'CV',
+            'icon' => 'bi-cup-hot',
+            'color' => '#F9C74F',
+            'number_format' => '{PREFIX}{NUMBER}',
+            'number_padding' => 5,
+            'reset_period' => 'daily',
+            'hours_enabled' => '0',
+            'hours_open' => '08:00',
+            'hours_close' => '17:00',
+            'is_active' => '1',
             'logo' => $this->image('cv.png'),
         ])->assertSessionHasNoErrors();
         $this->assertStringStartsWith('queue-items/', QueueItem::where('prefix', 'CV')->value('logo'));
@@ -247,8 +284,8 @@ class SecurityTest extends TestCase
             ->assertNotFound()
             ->assertSee('Halaman tidak ditemukan');
 
-        Route::get('/_uji/403', fn () => abort(403));
-        Route::get('/_uji/500', fn () => throw new \RuntimeException('rahasia-internal'));
+        Route::get('/_uji/403', fn() => abort(403));
+        Route::get('/_uji/500', fn() => throw new \RuntimeException('rahasia-internal'));
 
         config(['app.debug' => false]);
 
