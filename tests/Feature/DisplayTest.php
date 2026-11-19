@@ -57,7 +57,7 @@ class DisplayTest extends TestCase
             ->assertSee('display-initial', false)
             ->assertSee('Display Antrean')
             ->assertSee('Mulai Layar Display')
-            ->assertViewHas('config', fn (array $c) => $c['number_size'] === 'lg'
+            ->assertViewHas('config', fn(array $c) => $c['number_size'] === 'lg'
                 && $c['sound_enabled'] === true
                 && $c['lang'] === 'id-ID'
                 && $c['list_limit'] === 5);
@@ -207,18 +207,20 @@ class DisplayTest extends TestCase
 
     public function test_invalid_display_settings_fall_back_to_safe_values(): void
     {
-        foreach ([
-            'display_number_size' => 'huge',
-            'display_voice_volume' => '9',
-            'display_voice_rate' => '0.1',
-            'display_marquee_speed' => '1',
-            'display_list_limit' => '99',
-            'display_voice_lang' => 'bahasa_ngawur',
-        ] as $key => $value) {
+        foreach (
+            [
+                'display_number_size' => 'huge',
+                'display_voice_volume' => '9',
+                'display_voice_rate' => '0.1',
+                'display_marquee_speed' => '1',
+                'display_list_limit' => '99',
+                'display_voice_lang' => 'bahasa_ngawur',
+            ] as $key => $value
+        ) {
             WebsiteSetting::create(['group' => 'display', 'key' => $key, 'value' => $value, 'type' => 'text']);
         }
 
-        $this->get(route('display.index'))->assertViewHas('config', fn (array $c) => $c['number_size'] === 'lg'
+        $this->get(route('display.index'))->assertViewHas('config', fn(array $c) => $c['number_size'] === 'lg'
             && $c['volume'] === 1.0
             && $c['rate'] === 0.5
             && $c['marquee_speed'] === 10.0
@@ -229,5 +231,13 @@ class DisplayTest extends TestCase
     public function test_navigation_links_to_the_display_now_that_it_exists(): void
     {
         $this->get(route('home'))->assertOk()->assertSee(route('display.index'), false);
+    }
+
+    public function test_logged_in_admin_can_open_the_display_too(): void
+    {
+        $this->item();
+
+        $this->actingAs($this->admin)->get(route('display.index'))->assertOk();
+        $this->actingAs($this->admin)->getJson(route('display.data'))->assertOk();
     }
 }

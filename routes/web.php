@@ -1,24 +1,23 @@
 <?php
 
+use App\Http\Controllers\Admin\ColorSettingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\QueueItemController;
+use App\Http\Controllers\Admin\QueueManagementController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WebsiteSettingController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Public\DisplayController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\QueueController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\QueueItemController;
-use App\Http\Controllers\Admin\QueueManagementController;
-use App\Http\Controllers\Public\DisplayController;
-use App\Http\Controllers\Admin\ColorSettingController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\WebsiteSettingController;
 
 /*
 |--------------------------------------------------------------------------
-| Publik
+| Publik (dapat dibuka siapa saja, termasuk admin yang sedang login)
 |--------------------------------------------------------------------------
 */
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/ambil-antrean', [QueueController::class, 'create'])->name('queue.create');
@@ -32,19 +31,20 @@ Route::get('/antrean/tiket/{queue}', [QueueController::class, 'ticket'])
     ->middleware('signed')
     ->name('queue.ticket');
 
+Route::get('/display', [DisplayController::class, 'index'])->name('display.index');
+
+Route::get('/display/data', [DisplayController::class, 'data'])
+    ->middleware('throttle:display-data')
+    ->name('display.data');
+
 /*
 |--------------------------------------------------------------------------
-| Autentikasi
+| Autentikasi (khusus tamu)
 |--------------------------------------------------------------------------
 */
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'create'])->name('login');
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
-    Route::get('/display', [DisplayController::class, 'index'])->name('display.index');
-
-    Route::get('/display/data', [DisplayController::class, 'data'])
-        ->middleware('throttle:display-data')
-        ->name('display.data');
 });
 
 Route::post('/logout', [LoginController::class, 'destroy'])
@@ -62,6 +62,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+        // Profil admin
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
