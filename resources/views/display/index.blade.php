@@ -67,13 +67,18 @@
         <footer class="display-footer">
             <div class="footer-info">
                 <strong>{{ $site->name }}</strong>
-                @if ($site->url) <span>{{ $site->url }}</span> @endif
-                @if ($site->phone) <span><i class="bi bi-telephone"></i> {{ $site->phone }}</span> @endif
+                @if ($site->url)
+                    <span>{{ $site->url }}</span>
+                @endif
+                @if ($site->phone)
+                    <span><i class="bi bi-telephone"></i> {{ $site->phone }}</span>
+                @endif
             </div>
 
             <div class="marquee" aria-label="Pesan pelayanan">
                 @if ($config['marquee'] !== '')
-                    <div class="marquee-track" style="animation-duration: {{ $config['marquee_speed'] }}s">{{ $config['marquee'] }}</div>
+                    <div class="marquee-track" style="animation-duration: {{ $config['marquee_speed'] }}s">
+                        {{ $config['marquee'] }}</div>
                 @endif
             </div>
 
@@ -85,7 +90,8 @@
 
         {{-- ================= Kontrol (muncul saat mouse bergerak) ================= --}}
         <div class="display-toolbar">
-            <button type="button" class="tool-btn" id="settings-btn" aria-label="Pengaturan suara" title="Pengaturan suara (S)">
+            <button type="button" class="tool-btn" id="settings-btn" aria-label="Pengaturan suara"
+                title="Pengaturan suara (S)">
                 <i class="bi bi-volume-up"></i>
             </button>
             <button type="button" class="tool-btn" id="fullscreen-btn" aria-label="Layar penuh" title="Layar penuh (F)">
@@ -96,7 +102,8 @@
         <div class="settings-panel" id="settings-panel" hidden>
             <div class="settings-head">
                 <strong>Pengaturan Suara</strong>
-                <button type="button" class="tool-btn small" id="settings-close" aria-label="Tutup"><i class="bi bi-x-lg"></i></button>
+                <button type="button" class="tool-btn small" id="settings-close" aria-label="Tutup"><i
+                        class="bi bi-x-lg"></i></button>
             </div>
 
             <p class="settings-note" id="voice-unsupported" hidden>Browser ini tidak mendukung suara (Web Speech API).</p>
@@ -135,8 +142,11 @@
         <div class="start-overlay" id="start-overlay">
             <div class="start-card">
                 <h2>{{ $config['title'] }}</h2>
-                @if ($only) <p class="start-service">{{ $only->name }}</p> @endif
-                <p>Klik tombol di bawah untuk memulai. Langkah ini diperlukan agar browser mengizinkan suara panggilan dan layar penuh.</p>
+                @if ($only)
+                    <p class="start-service">{{ $only->name }}</p>
+                @endif
+                <p>Klik tombol di bawah untuk memulai. Langkah ini diperlukan agar browser mengizinkan suara panggilan dan
+                    layar penuh.</p>
                 <button type="button" class="btn btn-primary btn-lg" id="start-btn">
                     <i class="bi bi-play-fill"></i> Mulai Layar Display
                 </button>
@@ -144,6 +154,6 @@
         </div>
     </div>
 
-    <script type="application/json" id="display-config">@json($config)</script>
-    <script type="application/json" id="display-initial">@json($snapshot)</script>
+    <script type="application/json" id="display-config">@json($config, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)</script>
+    <script type="application/json" id="display-initial">@json($snapshot, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)</script>
 @endsection

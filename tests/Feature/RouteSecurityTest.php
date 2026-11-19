@@ -14,7 +14,10 @@ class RouteSecurityTest extends TestCase
     private const PUBLIC_WRITE_ROUTES = ['login.store', 'queue.store'];
 
     /** Endpoint bawaan Reverb; tidak dipakai karena aplikasi hanya memakai channel publik. */
-    private const FRAMEWORK_URIS = ['broadcasting/auth'];
+    private const FRAMEWORK_URIS = [
+        'broadcasting/auth',
+        'storage/{path}',
+    ];
 
     public function test_every_admin_route_has_auth_and_admin_middleware(): void
     {
