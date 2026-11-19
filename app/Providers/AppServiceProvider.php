@@ -7,6 +7,7 @@ use App\Observers\QueueObserver;
 use App\View\Composers\AdminComposer;
 use App\View\Composers\SiteComposer;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
@@ -39,5 +40,11 @@ class AppServiceProvider extends ServiceProvider
 
         // Data untuk layar display (polling cadangan dan penyegaran).
         RateLimiter::for('display-data', fn (Request $request) => Limit::perMinute(120)->by($request->ip()));
+
+        // Audit N+1: di luar produksi, pelanggaran dicatat ke log (tidak melempar error).
+        Model::preventLazyLoading(! $this->app->isProduction());
+        Model::handleLazyLoadingViolationUsing(function (Model $model, string $relation): void {
+            logger()->warning('N+1 terdeteksi: ' . $model::class . '::' . $relation);
+        });
     }
 }
